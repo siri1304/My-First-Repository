@@ -1,0 +1,63 @@
+
+<h1>Servers</h1>
+<hr>
+<h3>Adding New Server</h3>
+<hr>
+
+<form #newServerForm ="ngForm" (submit) ="addServer(newServerForm.value)">
+    <div *ngIf="id.touched && id.invalid">
+ <P class="errors">
+    Enter Server ID
+</P>
+    </div>
+    <div *ngIf="name.touched && name.invalid">
+        <P class="errors">
+            Enter Server name
+        </P>
+            </div>
+            <div *ngIf="id.dirty && id.value.length<4">
+                <P class="errors">
+                    ID length should be 4 characters
+                </P>
+                    </div>
+            <div *ngIf="name.dirty && name.value.length<6">
+                <P class="errors">
+                    Name length should be 6 characters
+                </P>
+                    </div>
+    <table>
+        <tr>
+            <td>
+                <label for="serverID">server Id</label>
+            </td>
+            <td>
+                <input type="text" name ="id" ngModel #id = "ngModel" required minlength="4">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="serverName">server Name</label>
+            </td>
+            <td>
+                <input type="text" name ="name" ngModel #name = "ngModel" required monlength="6" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type ="submit" [disabled]= "newServerForm.invalid"> Add Server</button>
+            </td>
+        </tr>
+    </table>
+    </form>
+    <h3> SERVER LIST</h3>
+<ul *ngFor="let server of serverList;index as i"[ngClass]="{status: server.status,nostatus:!server.status}">
+    <li>{{server.id}}</li>
+    <li>{{server.name}}</li>
+    <li>
+        <button class="editBtn" (click)="onChangeState(i)">Toggle</button>
+    </li>
+    <li>{{server.status?'On':'Off'}}</li>
+<li>
+    <button class ="delBtn" (click)="onDeleteSever(i)">X</button>
+</li>
+</ul>
